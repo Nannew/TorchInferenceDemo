@@ -55,13 +55,13 @@ def deepPETmodel2(learning_rate):
     model.add(BatchNormalization())
     model.add(Activation('relu'))
               
-    model.add(Conv2D(filters=256, kernel_size=(3,3), strides=(2,2), padding='same'))
+    model.add(Conv2D(filters=128, kernel_size=(3,3), strides=(2,2), padding='same'))
     model.add(BatchNormalization())
     model.add(Activation('relu'))
-    model.add(Conv2D(filters=256, kernel_size=(3,3), strides=(1,1), padding='same'))
+    model.add(Conv2D(filters=128, kernel_size=(3,3), strides=(1,1), padding='same'))
     model.add(BatchNormalization())
     model.add(Activation('relu'))
-    model.add(Conv2D(filters=256, kernel_size=(3,3), strides=(1,1), padding='same'))
+    model.add(Conv2D(filters=128, kernel_size=(3,3), strides=(1,1), padding='same'))
     model.add(BatchNormalization())
     model.add(Activation('relu'))
    
@@ -76,13 +76,13 @@ def deepPETmodel2(learning_rate):
     model.add(Activation('relu'))
     
     model.add(UpSampling2D((2, 2), interpolation='bilinear'))
-    model.add(Conv2D(filters=256, kernel_size=(3,3), strides=(1,1), padding='same'))
+    model.add(Conv2D(filters=128, kernel_size=(3,3), strides=(1,1), padding='same'))
     model.add(BatchNormalization())
     model.add(Activation('relu'))
-    model.add(Conv2D(filters=256, kernel_size=(3,3), strides=(1,1), padding='same'))
+    model.add(Conv2D(filters=128, kernel_size=(3,3), strides=(1,1), padding='same'))
     model.add(BatchNormalization())
     model.add(Activation('relu'))
-    model.add(Conv2D(filters=256, kernel_size=(3,3), strides=(1,1), padding='same'))
+    model.add(Conv2D(filters=128, kernel_size=(3,3), strides=(1,1), padding='same'))
     model.add(BatchNormalization())
     model.add(Activation('relu'))
               
@@ -157,16 +157,16 @@ class PyTorchDeepPETModel(nn.Module):
         self.conv7 = nn.Conv2d(128, 128, kernel_size=3, stride=1, padding=1)
         self.bn7 = nn.BatchNorm2d(128)
 
-        self.conv8 = nn.Conv2d(128, 256, kernel_size=3, stride=2, padding=1)
-        self.bn8 = nn.BatchNorm2d(256)
+        self.conv8 = nn.Conv2d(128, 128, kernel_size=3, stride=2, padding=1)
+        self.bn8 = nn.BatchNorm2d(128)
 
-        self.conv9 = nn.Conv2d(256, 256, kernel_size=3, stride=1, padding=1)
-        self.bn9 = nn.BatchNorm2d(256)
+        self.conv9 = nn.Conv2d(128, 128, kernel_size=3, stride=1, padding=1)
+        self.bn9 = nn.BatchNorm2d(128)
 
-        self.conv10 = nn.Conv2d(256, 256, kernel_size=3, stride=1, padding=1)
-        self.bn10 = nn.BatchNorm2d(256)
+        self.conv10 = nn.Conv2d(128, 128, kernel_size=3, stride=1, padding=1)
+        self.bn10 = nn.BatchNorm2d(128)
 
-        self.conv11 = nn.Conv2d(256, 512, kernel_size=3, stride=1, padding=1)
+        self.conv11 = nn.Conv2d(128, 512, kernel_size=3, stride=1, padding=1)
         self.bn11 = nn.BatchNorm2d(512)
 
         self.conv12 = nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=1)
@@ -176,17 +176,17 @@ class PyTorchDeepPETModel(nn.Module):
         self.bn13 = nn.BatchNorm2d(512)
 
         self.up1 = nn.Upsample(scale_factor=2, mode='bilinear', align_corners=False)
-        self.conv17 = nn.Conv2d(512, 256, kernel_size=3, stride=1, padding=1)
-        self.bn17 = nn.BatchNorm2d(256)
+        self.conv17 = nn.Conv2d(512, 128, kernel_size=3, stride=1, padding=1)
+        self.bn17 = nn.BatchNorm2d(128)
 
-        self.conv18 = nn.Conv2d(256, 256, kernel_size=3, stride=1, padding=1)
-        self.bn18 = nn.BatchNorm2d(256)
+        self.conv18 = nn.Conv2d(128, 128, kernel_size=3, stride=1, padding=1)
+        self.bn18 = nn.BatchNorm2d(128)
 
-        self.conv19 = nn.Conv2d(256, 256, kernel_size=3, stride=1, padding=1)
-        self.bn19 = nn.BatchNorm2d(256)
+        self.conv19 = nn.Conv2d(128, 128, kernel_size=3, stride=1, padding=1)
+        self.bn19 = nn.BatchNorm2d(128)
 
         self.up2 = nn.Upsample(scale_factor=2, mode='bilinear', align_corners=False)
-        self.conv20 = nn.Conv2d(256, 128, kernel_size=3, stride=1, padding=1)
+        self.conv20 = nn.Conv2d(128, 128, kernel_size=3, stride=1, padding=1)
         self.bn20 = nn.BatchNorm2d(128)
 
         self.conv21 = nn.Conv2d(128, 128, kernel_size=3, stride=1, padding=1)
@@ -277,10 +277,10 @@ print(pytorch_model)
 
 # https://pytorch.org/tutorials/advanced/cpp_export.html
 # Create an example input tensor with the same size as the input to the model
-example_input = torch.rand(1, 1, 256, 256)  # Batch size = 1, Channels = 1, Height = 256, Width = 256
+example_input = torch.rand(1, 1, 128, 128)  # Batch size = 1, Channels = 1, Height = 128, Width = 128
 
 # Convert the PyTorch model to TorchScript using tracing
 traced_model = torch.jit.trace(pytorch_model, example_input)
 
 # Save the TorchScript model to a file
-traced_model.save(path+'deep_pet_traced_model_256.pt')
+traced_model.save(path+'deep_pet_traced_model.pt')

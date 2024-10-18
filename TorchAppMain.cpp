@@ -12,8 +12,8 @@
 
 int main() {
 	//Define inputs/outputs
-	const std::string inputTorchModelname = "deep_pet_traced_model_256.pt";//Torch Script Module - traced model
-	const std::string inputSinoVolname = "sinogramfile_4_T1.nii.gz";//Input Sino Volume - Height = 256, Width = 256, Slice = 181
+	const std::string inputTorchModelname = "deep_pet_traced_model.pt";//Torch Script Module - traced model
+	const std::string inputSinoVolname = "sinogramfile_4_T1.nii.gz";//Input Sino Volume - Height = 128, Width = 128, Slice = 181
 	const std::string outputPETVolname = "output_imagefile_4_T1.nii.gz";//Output PET Img Volume
 
 	// 1. Read sinogram volume with ITK
@@ -47,7 +47,7 @@ int main() {
 	std::cout << "Image size: " << size << std::endl;
 
 	// 2. Convert the image data to a PyTorch tensor
-	// Assuming the input size is (256, 256) as expected by the model, we slice the last dimension (depth)
+	// Assuming the input size is (128, 128) as expected by the model, we slice the last dimension (depth)
 	int height = size[0];  // Y-dimension
 	int width = size[1];   // X-dimension
 	int depth = size[2];   // Z-dimension
