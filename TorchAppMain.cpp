@@ -84,8 +84,12 @@ int main() {
 	// 4. Iterate over each depth slice (Z-dimension) and copy output slice to PET image volume
 	for (int z = 0; z < depth; ++z) {
 		// Extract the 2D slice from the 3D image (height x width)
-		// Remember: ITK stores images in row-major order (Y, X, Z)
+		// ITK stores images in row-major order (Y, X, Z)
 		PixelType* slice_data = pixelData + z * height * width;
+
+		// Directly copy the input slice to the output image (no inference) to make sure dimensions match
+		//PixelType* output_slice_data = outputPixelData + z * height * width;
+		//std::memcpy(output_slice_data, slice_data, height * width * sizeof(PixelType));
 
 		// Convert this slice to a PyTorch tensor
 		at::Tensor tensor_image = torch::from_blob(slice_data, { 1, 1, height, width }, torch::kFloat).clone(); // [batch_size, channels, height, width]
